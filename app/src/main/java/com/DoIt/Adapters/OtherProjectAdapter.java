@@ -40,6 +40,15 @@ public class OtherProjectAdapter extends RecyclerView.Adapter{
             R.color.reject,
             R.color.unReply,
     };
+    private static final String[] ROLE = {
+            "事主",
+            "管理员",
+            ""
+    };
+    private static final String[][] OPTION_STATE = {
+            {"已回应", "已同意", "已拒绝", "未回应",},
+            {"已审核", "已通过", "已否决", "未审核",},
+    };
     private OnButtonClickListener onButtonClickListener;
     private List<OtherProjectAdapterItem> itemList;
     private Progress progress;
@@ -222,9 +231,9 @@ public class OtherProjectAdapter extends RecyclerView.Adapter{
                     onButtonClickListener.getJoiner(getAdapterPosition());
                 }
             });
+            status.setVisibility(View.GONE);
             edit.setVisibility(View.GONE);
             reply.setVisibility(View.GONE);
-            status.setVisibility(View.GONE);
             recycler.setLayoutManager(new LinearLayoutManager(itemView.getContext()));
             adapter = new ContentAdapter(false, activity);
             recycler.setAdapter(adapter);
@@ -233,41 +242,36 @@ public class OtherProjectAdapter extends RecyclerView.Adapter{
          * 加载数据
          * @param item 所要加载的数据
          */
+        @SuppressLint("SetTextI18n")
         private void setView(OtherProjectAdapterItem item) {
             recycler.setVisibility(View.VISIBLE);
+            //底项没有子类，不能展开
+            if (item.projectItem.getType() == 2) open.setVisibility(View.GONE);
+            if (item.isOpen) open.setImageResource(R.drawable.close);
+            else open.setImageResource(R.drawable.open);
+            if (item.isHide) {
+                hide.setImageResource(R.drawable.hide);
+                recycler.setVisibility(View.GONE);
+            } else {
+                hide.setImageResource(R.drawable.show);
+                recycler.setVisibility(View.VISIBLE);
+            }
             //加载数据
-            name.setText(item.projectItem.getSender().getJoiner().getUserName());
+            name.setText(item.projectItem.getSender().getJoiner().getUserName()
+                    + " " + ROLE[item.projectItem.getSender().getRole()]);
             if (item.projectItem.getContent().equals("[]") || item.isHide)
                 recycler.setVisibility(View.GONE);
             else adapter.setList(item.projectItem.getContent(), itemView.getContext());
             date.setText(item.projectItem.getUpdatedAt());
             String headImage = item.projectItem.getSender().getJoiner().getHeadImage();
-            if (headImage != null)
-                Glide.with(itemView).load(headImage).into(head);
-
-            //底项没有子类，不能展开
-            if (item.projectItem.getType() == 2) {
-                open.setVisibility(View.GONE);
-            }
-            //顶项没有option
-            if (item.projectItem.getType() == 0) option.setVisibility(View.GONE);
-            else option.setVisibility(View.VISIBLE);
-            if (item.isOpen) open.setImageResource(R.drawable.close);
-            else open.setImageResource(R.drawable.open);
-            if (item.isHide) {
-                hide.setImageResource(R.drawable.hide);
-                status.setVisibility(View.GONE);
-                recycler.setVisibility(View.GONE);
-            } else {
-                hide.setImageResource(R.drawable.show);
-                status.setVisibility(View.VISIBLE);
-                recycler.setVisibility(View.VISIBLE);
-            }
+            if (headImage != null) Glide.with(itemView).load(headImage).into(head);
             //根据态度设置议程颜色和图像
             Resources resources = itemView.getContext().getResources();
             if (item.projectItem.getType() != 0) {
                 itemView.setBackgroundColor(resources.getColor(COLOR[item.projectItem.getOption()]));
                 option.setImageResource(OPTION[item.projectItem.getOption()]);
+                name.setText(name.getText().toString()
+                        + " " + OPTION_STATE[item.projectItem.getType()][item.projectItem.getOption()]);
             } else {
                 itemView.setBackgroundColor(resources.getColor(R.color.target));
                 option.setImageResource(R.color.target);
