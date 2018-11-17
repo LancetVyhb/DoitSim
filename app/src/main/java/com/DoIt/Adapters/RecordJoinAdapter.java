@@ -41,6 +41,10 @@ public class RecordJoinAdapter extends RecyclerView.Adapter{
             "管理员",
             ""
     };
+    private static final String[][] OPTION_STATE = {
+            {"已回应", "已同意", "已拒绝", "未回应",},
+            {"已审核", "已通过", "已否决", "未审核",},
+    };
     private List<ProjectAdapterItem> itemList;
     private OnButtonClickListener onButtonClickListener;
     private SimpleDateFormat formatter;
@@ -245,17 +249,6 @@ public class RecordJoinAdapter extends RecyclerView.Adapter{
         @SuppressLint({"SetTextI18n", "ResourceAsColor"})
         private void setView(ProjectAdapterItem item) {
             recycler.setVisibility(View.VISIBLE);
-            name.setText(item.projectItems.getSender().getJoiner().getUserName()
-                    + " " + ROLE[item.projectItems.getSender().getRole()]);//加载身份
-            if (item.projectItems.getContent().equals("[]")) recycler.setVisibility(View.GONE);
-            else adapter.setList(item.projectItems.getContent(), itemView.getContext());
-            if (item.projectItems.getUpdatedAt() != null)
-                date.setText(formatter.format(item.projectItems.getUpdatedAt()));//加载时间
-            else date.setText(formatter.format(item.projectItems.getCreatedAt()));
-            if (item.projectItems.getSender().getJoiner().getHeadImage() != null)
-                Glide.with(itemView).load//加载图片
-                        (item.projectItems.getSender().getJoiner().getHeadImage()).into(head);
-
             itemView.setVisibility(View.VISIBLE);
             status.setVisibility(View.VISIBLE);
             open.setVisibility(View.VISIBLE);
@@ -265,9 +258,6 @@ public class RecordJoinAdapter extends RecyclerView.Adapter{
                 open.setVisibility(View.GONE);
                 reply.setVisibility(View.GONE);
             } else {
-                //顶项没有option，也无法被回复
-                if (item.projectItems.getType() == 0) option.setVisibility(View.GONE);
-                else option.setVisibility(View.VISIBLE);
                 replied.setText(Integer.toString(item.projectItems.getTotal()));
                 agree.setText(Integer.toString(item.projectItems.getAgree()));
                 reject.setText(Integer.toString(item.projectItems.getReject()));
@@ -282,11 +272,24 @@ public class RecordJoinAdapter extends RecyclerView.Adapter{
                 hide.setImageResource(R.drawable.show);
                 recycler.setVisibility(View.VISIBLE);
             }
+            //加载数据
+            name.setText(item.projectItems.getSender().getJoiner().getUserName()
+                    + " " + ROLE[item.projectItems.getSender().getRole()]);//加载身份
+            if (item.projectItems.getContent().equals("[]")) recycler.setVisibility(View.GONE);
+            else adapter.setList(item.projectItems.getContent(), itemView.getContext());
+            if (item.projectItems.getUpdatedAt() != null)
+                date.setText(formatter.format(item.projectItems.getUpdatedAt()));//加载时间
+            else date.setText(formatter.format(item.projectItems.getCreatedAt()));
+            if (item.projectItems.getSender().getJoiner().getHeadImage() != null)
+                Glide.with(itemView).load//加载图片
+                        (item.projectItems.getSender().getJoiner().getHeadImage()).into(head);
             //根据态度设置议程颜色和图像
             Resources resources = itemView.getContext().getResources();
             if (item.projectItems.getType() != 0) {
                 itemView.setBackgroundColor(resources.getColor(COLOR[item.projectItems.getOption()]));
                 option.setImageResource(OPTION[item.projectItems.getOption()]);
+                name.setText(name.getText().toString() + " " +
+                        OPTION_STATE[item.projectItems.getType() - 1][item.projectItems.getOption()]);
             } else {
                 itemView.setBackgroundColor(resources.getColor(R.color.target));
                 option.setImageResource(R.color.target);
