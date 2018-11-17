@@ -36,8 +36,8 @@
       <file leaf-file-name="ProjectAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/Adapters/ProjectAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="297" column="74" selection-start-line="297" selection-start-column="74" selection-end-line="297" selection-end-column="74" />
+            <state relative-caret-position="1251">
+              <caret line="302" column="45" selection-start-line="302" selection-start-column="45" selection-end-line="302" selection-end-column="45" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#3318#3319#0" expanded="true" />
@@ -47,14 +47,50 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="project_item.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/project_item.xml">
-          <provider selected="true" editor-type-id="android-designer2">
-            <state />
+      <file leaf-file-name="GetSubjectByCloud.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/CloudAsyncs/GetSubjectByCloud.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="219">
+              <caret line="74" column="13" selection-start-line="74" selection-start-column="13" selection-end-line="74" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
           </provider>
-          <provider editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="182" column="47" lean-forward="true" selection-start-line="182" selection-start-column="47" selection-end-line="182" selection-end-column="47" />
+        </entry>
+      </file>
+      <file leaf-file-name="Login.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/View/Login.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="118">
+              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Bmobs.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/Bmobs.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-5258">
+              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DoItPushMessageReceiver.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/DoItPushMessageReceiver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="119" column="100" selection-start-line="119" selection-start-column="100" selection-end-line="119" selection-end-column="100" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Daos.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/Daos.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="258">
+              <caret line="1247" column="44" selection-start-line="1247" selection-start-column="44" selection-end-line="1247" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -84,6 +120,13 @@
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -2425,6 +2468,10 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/DoIt/Adapters/RecordJoinAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/DoIt/Adapters/ProjectAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/project_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/DoIt/CloudAsyncs/GetSubjectByCloud.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/DoIt/View/Login.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/DoIt/Bmobs.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/DoIt/Daos.java" />
       </list>
     </option>
   </component>
@@ -2740,8 +2787,8 @@
       <window_info id="Captures" order="2" weight="0.25" />
       <window_info id="Capture Tool" />
       <window_info id="Designer" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19772118" />
-      <window_info anchor="bottom" id="Build" weight="0.32905984" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19772118" />
+      <window_info anchor="bottom" id="Build" weight="0.3281027" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32905984" />
       <window_info anchor="right" id="Gradle" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -2806,13 +2853,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/DoItPushMessageReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="183" column="30" lean-forward="true" selection-start-line="183" selection-start-column="30" selection-end-line="183" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/Adapters/ProjectListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-888">
@@ -2858,10 +2898,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/project_item.xml">
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="333">
+          <caret line="182" column="47" lean-forward="true" selection-start-line="182" selection-start-column="47" selection-end-line="182" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/Adapters/ProjectAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="297" column="74" selection-start-line="297" selection-start-column="74" selection-end-line="297" selection-end-column="74" />
+        <state relative-caret-position="1251">
+          <caret line="302" column="45" selection-start-line="302" selection-start-column="45" selection-end-line="302" selection-end-column="45" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#3318#3319#0" expanded="true" />
@@ -2870,13 +2920,41 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/project_item.xml">
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/Bmobs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5258">
+          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        </state>
       </provider>
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="182" column="47" lean-forward="true" selection-start-line="182" selection-start-column="47" selection-end-line="182" selection-end-column="47" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/View/Login.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/CloudAsyncs/GetSubjectByCloud.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="74" column="13" selection-start-line="74" selection-start-column="13" selection-end-line="74" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/Daos.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="1247" column="44" selection-start-line="1247" selection-start-column="44" selection-end-line="1247" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/DoIt/DoItPushMessageReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="119" column="100" selection-start-line="119" selection-start-column="100" selection-end-line="119" selection-end-column="100" />
         </state>
       </provider>
     </entry>
