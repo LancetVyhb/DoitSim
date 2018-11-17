@@ -530,10 +530,11 @@ public class Daos {
      * 存储任务集合
      * @param joinList 任务集合
      */
-    public void setOrUpdateJoinListToDao(List<Join> joinList) {
-        if (joinList != null && joinList.size() != 0) {
-            for (Join join : joinList) {
-                Joins joins = checkJoinsExist(join.getObjectId());
+    public void setOrUpdateJoinListToDao(JSONArray joinList) {
+        if (joinList != null && joinList.length() != 0) {
+            for (int i = 0; i < joinList.length(); i++) {
+                JSONObject join = joinList.optJSONObject(i);
+                Joins joins = checkJoinsExist(join.optString("objectId"));
                 if (joins == null) setJoinToDao(join);
                 else updateJoinToDao(join);
             }
@@ -621,13 +622,26 @@ public class Daos {
     }
     /**
      * 根据projectItems来更新对应的joins的任务状态
-     * @param joins 所要更新的projectItems
+     * @param joins 所要更新的joins
      */
     public void setJoinStatus(Joins joins) {
         if (joins.getRole() == 0)
             joins.setStatus(checkJoinStatusWithTarget(joins.getProjectItemsList().get(0)));
         else joins.setStatus(checkJoinStatus(joins.getProjectItemsList().get(0)));
         joins.update();
+    }
+    /**
+     * 根据projectItems来更新对应的joins的任务状态
+     */
+    public void setAllJoinStatus() {
+        List<Joins> joinsList = getNowJoinList();
+        if (joinsList != null) {
+            for (Joins joins : joinsList) {
+                joins.resetProjectItemsList();
+                setJoinStatus(joins);
+                setJoinNewItem(joins.getId(), joins.getProjects().getProjectItemsList().size());
+            }
+        }
     }
     /**
      * 更新joins的被点击次数
@@ -1210,30 +1224,6 @@ public class Daos {
     }
     /**
      * 存储或更新projectItem
-     * @param o 通过数据监听得来projectItem
-     */
-    public long[] setOrUpdateProjectItemListToDao(JSONArray o){
-        //根据type逐级上升存储或更新projectItem
-        long[] idList = new long[o.length()];
-        for (int i = 0; i < 3; i++) {
-            for (int u = 0; u < o.length(); u++) {
-                JSONObject item = o.optJSONObject(u);
-                if (item.optInt("type") == i) {
-                    ProjectItems items;
-                    //检查对应的projectItem是否存在，是则更新，否则存储
-                    if ((items = checkProjectItemsExist(item.optString("objectId"))) == null)
-                        idList[u] = setProjectItemToDao(item);
-                    else {
-                        updateProjectItemToDao(item);
-                        idList[u] = items.getId();
-                    }
-                }
-            }
-        }
-        return idList;
-    }
-    /**
-     * 存储或更新projectItem
      * @param list 通过向服务器查询得来projectItem
      */
     public void setOrUpdateProjectItemListToDao(List<ProjectItem> list){
@@ -1250,21 +1240,49 @@ public class Daos {
         }
     }
     /**
+     * 存储或更新projectItem
+     * @param list 通过云函数回调得来projectItem
+     */
+    public long[] setOrUpdateProjectItemListToDao(JSONArray list){
+        //根据type逐级上升存储或更新projectItem
+        long id[] = new long[list.length()];
+        for (int i = 0; i < 3; i++) {
+            for (int o = 0; o < list.length(); o++) {
+                JSONObject item = list.optJSONObject(o);
+                if (item.optInt("type") == i) {
+                    //检查对应的projectItem是否存在，是则更新，否则存储
+                    if (checkProjectItemsExist(item.optString("objectId")) == null)
+                        id[o] = setProjectItemToDao(item);
+                    else id[o] = updateProjectItemToDao(item);
+                }
+            }
+        }
+        return id;
+    }
+    /**
      * 存储通过向服务器查询得来的混杂的projectItem
      * @param list 通过向服务器查询得来的混杂的projectItem
      */
-    public void divideProjectItemList(List<ProjectItem> list) {
+    public void divideProjectItemList(JSONArray list) throws Exception {
         List<String> projectObjectIdList = new ArrayList<>();
-        //提取ProjectObjectId
-        for(ProjectItem item : list)
-            if(!projectObjectIdList.contains(item.getProject().getObjectId()))
-                projectObjectIdList.add(item.getProject().getObjectId());
-        //根据projectObjectId分拆list，根据projectObjectId分别存储projectItem
-        for (String objectId : projectObjectIdList) {
-            List<ProjectItem> items = new ArrayList<>();
-            for (ProjectItem item : list)
-                if (item.getProject().getObjectId().equals(objectId)) items.add(item);
-            setOrUpdateProjectItemListToDao(items);
+        if (list != null) {
+            //提取ProjectObjectId
+            for (int i = 0; i < list.length(); i++) {
+                String projectObjectId = list.optJSONObject(i)
+                        .optJSONObject("project").optString("objectId");
+                if (!projectObjectIdList.contains(projectObjectId))
+                    projectObjectIdList.add(projectObjectId);
+            }
+            //根据projectObjectId分拆list，根据projectObjectId分别存储projectItem
+            for (String objectId : projectObjectIdList) {
+                JSONArray items = new JSONArray();
+                for (int i = 0; i < list.length(); i++) {
+                    String projectObjectId = list.optJSONObject(i)
+                            .optJSONObject("project").optString("objectId");
+                    if (projectObjectId.equals(objectId)) items.put(list.optJSONObject(i));
+                }
+                setOrUpdateProjectItemListToDao(items);
+            }
         }
     }
     /**

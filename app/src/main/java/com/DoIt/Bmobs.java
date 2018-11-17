@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.bmob.v3.BmobQuery;
-import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobGeoPoint;
 import cn.bmob.v3.datatype.BmobPointer;
 import cn.bmob.v3.exception.BmobException;
@@ -23,89 +22,6 @@ import cn.bmob.v3.listener.QueryListener;
 import static com.DoIt.View.FirstPage.CHANNEL;
 
 public class Bmobs {
-    /**
-     * 初次登陆后获取当前用户的subject
-     * @param user _user表
-     * @param result 回调方法
-     */
-    public static void getSubjectByUserObjectId(BmobUser user, Result<List<Subject>> result){
-        List<BmobQuery<Subject>> andList = new ArrayList<>();
-        BmobQuery<Subject> query1 = new BmobQuery<>();
-        query1.addWhereEqualTo("type", 0);
-        andList.add(query1);
-
-        BmobQuery<Subject> query2 = new BmobQuery<>();
-        query2.addWhereEqualTo("user", new BmobPointer(user));
-        andList.add(query2);
-
-        BmobQuery<Subject> query = new BmobQuery<>();
-        query.and(andList);
-        query.order("createdAt");
-        query.findObjects(new FindListener<Subject>() {
-            private Result<List<Subject>> result;
-            @Override
-            public void done(List<Subject> list, BmobException e) {
-                result.onData(list,e);
-            }
-            private FindListener<Subject> setResult(Result<List<Subject>> result){
-                this.result = result;
-                return this;
-            }
-        }.setResult(result));
-    }
-    /**
-     * 初次登陆后获取当前用户的任务列表
-     * @param objectId subject表
-     * @param result 回调方法
-     */
-    public static void getSelfJoinList(String objectId, Result<List<Join>> result){
-        BmobQuery<Join> query = new BmobQuery<>();
-        Subject subject = new Subject();
-        subject.setObjectId(objectId);
-        query.addWhereEqualTo("joiner", new BmobPointer(subject));
-        query.include("project.sender");
-        query.findObjects(new FindListener<Join>() {
-            private Result<List<Join>> result;
-            @Override
-            public void done(List<Join> list, BmobException e) {
-                result.onData(list, e);
-            }
-            private FindListener<Join> setResult(Result<List<Join>> result){
-                this.result = result;
-                return this;
-            }
-        }.setResult(result));
-    }
-    /**
-     * 初次登陆后获取当前用户的任务内容
-     * @param joinList 任务列表
-     * @param result 回调方法
-     */
-    public static void getProjectItemListByJoinList
-            (List<Join> joinList, Result<List<ProjectItem>> result){
-        List<BmobQuery<ProjectItem>> orList = new ArrayList<>();
-        for (Join join : joinList) {
-            Project project = new Project();
-            project.setObjectId(join.getProject().getObjectId());
-            BmobQuery<ProjectItem> query = new BmobQuery<>();
-            query.addWhereEqualTo("project", new BmobPointer(project));
-            orList.add(query);
-        }
-        BmobQuery<ProjectItem> query = new BmobQuery<>();
-        query.or(orList);
-        query.include("sender.joiner");
-        query.findObjects(new FindListener<ProjectItem>() {
-            private Result<List<ProjectItem>> result;
-            @Override
-            public void done(List<ProjectItem> list, BmobException e) {
-                result.onData(list, e);
-            }
-            private FindListener<ProjectItem> setResult(Result<List<ProjectItem>> result){
-                this.result = result;
-                return this;
-            }
-        }.setResult(result));
-    }
     /**
      * 通过搜索关键字查询用户
      * @param queryText 搜索关键字
