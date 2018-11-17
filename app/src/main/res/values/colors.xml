@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="transparent">#00000000</color>
+//根据option设置projectItems的颜色
+    <color name="target">#ffffff</color>
+    <color name="unReply">#adadad</color>
+    <color name="replied">#fef0b5</color>
+    <color name="agree">#beffad</color>
+    <color name="reject">#ffb2b2</color>
+//根据任务状态设置joins的颜色
+    <color name="plan">#c3c3c3</color>
+    <color name="execute">#fff3ad</color>
+    <color name="finish">#abffa6</color>
+    <color name="warn">#ffadad</color>
+    <color name="accent_material_light">#000000</color>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="隐私设置"
+        android:id="@+id/setPrivacy"
+        app:showAsAction="withText"/>
+    <item
+        android:id="@+id/setPower"
+        android:title="权限设置"
+        app:showAsAction="withText" />
+    <item
+        android:id="@+id/setPlace"
+        android:title="位置设置"
+        app:showAsAction="withText" />
+</menu>
