@@ -115,7 +115,7 @@ public class SetProjectByCloud {
         upload.setThread(new Runnable() {
             @Override
             public void run() {
-                asc.callEndpoint("setProject", params, setProject);
+                asc.callEndpoint("newSetProject", params, setProject);
             }
         }).startProgress("正在上传数据，请稍等");
     }
