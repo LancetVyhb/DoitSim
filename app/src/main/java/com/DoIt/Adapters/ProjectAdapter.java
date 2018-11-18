@@ -328,7 +328,7 @@ public class ProjectAdapter extends RecyclerView.Adapter{
             if (item.projectItems.getHasReplied()) reply.setVisibility(View.GONE);
             //如果该项目不是自己的，则隐藏“编辑”按钮
             if (!item.projectItems.getIsSelf()) edit.setVisibility(View.GONE);
-                //执行人自己不能审核自己
+            //执行人自己不能审核自己
             else if (item.projectItems.getType() == 1 && self.getRole() == 2)
                 reply.setVisibility(View.GONE);
             if (item.projectItems.getType() == 2) {

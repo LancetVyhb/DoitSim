@@ -1014,17 +1014,15 @@ public class Daos {
             ProjectItems parent = null;
             Projects projects;
             Joins senders;
-            //检查对应的sender是否已存储，是则提取出来，否则调用相应方法存储该sender
+            //检查对应的sender是否已存储，是则提取出来，否则调用相应    方法存储该sender
             JSONObject sender = projectItem.optJSONObject("sender");
-            if ((senders = checkJoinsExist(sender.optString("objectId"))) == null) {
+            if ((senders = checkJoinsExist(sender.optString("objectId"))) == null)
                 senders = getJoins(setJoinToDao(sender));
                 //检查对应的sender是否与当前用户有关，是则设置该projectItem与当前用户有关
-            } else {
-                if (senders.getJoiner() == getSelf()) projectItems.setIsSelf(true);
-                else {
-                    projectItems.setIsSelf(false);
-                    updateSubjectToDao(sender.optJSONObject("joiner"));
-                }
+            if (senders.getJoiner() == getSelf()) projectItems.setIsSelf(true);
+            else {
+                projectItems.setIsSelf(false);
+                updateSubjectToDao(sender.optJSONObject("joiner"));
             }
             //获取对应的projects，该projects肯定已存储
             projects = checkProjectsExist
@@ -1083,13 +1081,11 @@ public class Daos {
             //检查对应的sender是否已存储，是则提取出来，否则调用相应方法存储该sender
             if ((senders = checkJoinsExist(sender.getObjectId())) == null)
                 senders = getJoins(setJoinToDao(sender));
+            //检查对应的sender是否与当前用户有关，是则设置该projectItem与当前用户有关
+            if (senders.getJoiner() == getSelf()) projectItems.setIsSelf(true);
             else {
-                //检查对应的sender是否与当前用户有关，是则设置该projectItem与当前用户有关
-                if (senders.getJoiner() == getSelf()) projectItems.setIsSelf(true);
-                else {
-                    projectItems.setIsSelf(false);
-                    updateSubjectToDao(sender.getJoiner());
-                }
+                projectItems.setIsSelf(false);
+                updateSubjectToDao(sender.getJoiner());
             }
             //获取对应的projects，该projects肯定已存储
             projects = checkProjectsExist(projectItem.getProject().getObjectId());

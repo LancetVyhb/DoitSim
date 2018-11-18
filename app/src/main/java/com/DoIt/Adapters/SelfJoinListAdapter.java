@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,14 +95,13 @@ public class SelfJoinListAdapter extends RecyclerView.Adapter{
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, date, title, status, number,badge;
+        private TextView name, date, title, status, number;
         private ImageView head;
         private ImageButton deal;
         private QBadgeView badgeView;
 
         private ViewHolder(View itemView) {
             super(itemView);
-            badge = itemView.findViewById(R.id.badge);
             deal = itemView.findViewById(R.id.deal);
             name = itemView.findViewById(R.id.name);
             date = itemView.findViewById(R.id.time);
@@ -110,7 +110,9 @@ public class SelfJoinListAdapter extends RecyclerView.Adapter{
             number = itemView.findViewById(R.id.number);
             head = itemView.findViewById(R.id.head);
             badgeView = new QBadgeView(itemView.getContext());
-            badgeView.bindTarget(badge);
+            badgeView.bindTarget(head)
+                    .setBadgeGravity(Gravity.TOP | Gravity.END)
+                    .setGravityOffset(0, 0, true);
             head.setImageResource(R.drawable.head);
             deal.setImageResource(R.drawable.ic_sync_black_24dp);
             deal.setOnClickListener(new View.OnClickListener() {
