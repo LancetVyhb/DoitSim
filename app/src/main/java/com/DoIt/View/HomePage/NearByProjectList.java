@@ -42,7 +42,7 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.UpdateListener;
 
 public class NearByProjectList extends Fragment {
-    private static final String[] INVITE_OPTION = {
+    private static final String[] ADD_OPTION = {
             "已有任务",
             "新任务"
     };
@@ -127,7 +127,7 @@ public class NearByProjectList extends Fragment {
         AlertDialog.Builder builder = new AlertDialog.Builder
                 (Objects.requireNonNull(getContext()), R.style.MyDialogTheme);
         builder.setTitle("请选择方式");
-        builder.setItems(INVITE_OPTION, new DialogInterface.OnClickListener() {
+        builder.setItems(ADD_OPTION, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent;
@@ -154,7 +154,7 @@ public class NearByProjectList extends Fragment {
         if (location != null) {
             adapter.setWhere(location, getContext());
             setAdapter();
-        } else Toast.makeText(getContext(), "无法获取位置", Toast.LENGTH_SHORT).show();
+        }
     }
     /**
      * 初次获取附近的任务列表

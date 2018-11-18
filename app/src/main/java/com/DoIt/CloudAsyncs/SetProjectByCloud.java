@@ -67,7 +67,7 @@ public class SetProjectByCloud {
         projects = new Projects();
         projects.setStruct(power.toString());
         projects.setTitle(title);
-        projects.setNumber(1);
+        projects.setNumber(list.size());
 
         target = new ProjectItems();
         target.setType(0);
