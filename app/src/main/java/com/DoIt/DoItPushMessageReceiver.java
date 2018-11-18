@@ -50,15 +50,13 @@ public class DoItPushMessageReceiver extends BroadcastReceiver {
             Intent send = new Intent("dataPush");
             long id = -1;
             boolean shouldNotice = true;
-            JSONObject newData = null;
-            JSONObject data = null;
+            JSONObject newData;
+            JSONObject data;
+            JSONArray dataArray;
             try {
                 newData = new JSONObject(intent.getStringExtra("msg"));
-                data = newData.getJSONObject("data");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            if (data != null) {
+                data = newData.optJSONObject("data");
+                dataArray = newData.optJSONArray("data");
                 //dataOption指数据变化类型，set为添加，update为更新，delete为删除
                 //dateType指数据类型，如join、project、projectItem、invite
                 String dataOption = newData.optString("dataOption");
@@ -116,10 +114,11 @@ public class DoItPushMessageReceiver extends BroadcastReceiver {
                     case "ProjectItem":
                         switch (dataOption) {
                             case "set":
-                                JSONArray dataArray = newData.optJSONArray("data");
                                 long idList[] = Daos.getInt(context).setOrUpdateProjectItemListToDao(dataArray);
                                 send.putExtra("idList", idList);
-                                if (dataArray.optJSONObject(0).optInt("type") == 1)
+                                JSONObject item = dataArray.optJSONObject(0);
+                                if (item.optInt("type") == 1
+                                        && item.optJSONObject("sender").optInt("role") != 0)
                                     builder.setContentTitle("有" +
                                             Integer.toString(idList.length) + "人加入了任务：");
                                 else {
@@ -189,6 +188,8 @@ public class DoItPushMessageReceiver extends BroadcastReceiver {
                     manager.notify((int) (Math.random() * 100), builder.build());
                 //发送广播
                 context.sendBroadcast(send);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
     }
