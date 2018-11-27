@@ -26,7 +26,7 @@ public class DoItApplication extends Application{
         Bmob.initialize(this, "588210fbd30c8268c5d46e339a3d60c3");//Bmob后台初始化
         UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, null);//友盟初始化
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
-        startBmobPush();
+        initPush();
     }
     /**
      * 初次登陆或注册App后根据用户的objectId创建数据库
@@ -44,7 +44,7 @@ public class DoItApplication extends Application{
     /**
      * 使用推送服务时的初始化操作
      */
-    public void startBmobPush(){
+    public void initPush(){
         BmobInstallationManager.getInstance().initialize(new InstallationListener<BmobInstallation>() {
             @Override
             public void done(BmobInstallation bmobInstallation, BmobException e) { }

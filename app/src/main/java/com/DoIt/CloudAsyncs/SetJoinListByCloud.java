@@ -56,7 +56,7 @@ public class SetJoinListByCloud {
             params.put("project", DaoToJson.projectsToJson(target.getProjects(), false));
             params.put("parentId", target.getObjectId());
         } catch (Exception e) {
-            Toast.makeText(activity, "数据转换失败" + e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, "数据转换失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
             listener.onFailed(e);
         }
         setJoinList = new CloudCodeListener() {

@@ -75,7 +75,7 @@ public class DaoToJson {
      * @param projects projects
      * @param isNew true则为新创建的，false则为已有的，还得把附带的sender也转换成JSONObject
      */
-    public static JSONObject projectsToJson(Projects projects,boolean isNew) {
+    public static JSONObject projectsToJson(Projects projects, boolean isNew) {
         JSONObject project = new JSONObject();
         try {
             if (projects.getObjectId() != null)
