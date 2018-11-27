@@ -102,7 +102,7 @@ public class GetLocations {
             Toast.makeText(context, "逆编码地理信息失败", Toast.LENGTH_SHORT).show();
             return null;
         }
-        if (addresses == null) {
+        if (addresses == null || addresses.size() == 0) {
             Toast.makeText(context, "获取地址信息失败", Toast.LENGTH_SHORT).show();
             return null;
         } else return addresses.get(0);

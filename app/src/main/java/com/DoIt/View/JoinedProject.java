@@ -227,8 +227,7 @@ public class JoinedProject extends AppCompatActivity {
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (intent.getStringExtra("dataChannels").equals(projects.getObjectId())
-                        && !intent.getStringExtra("dataType").equals("Invite")) {
+                if (intent.getStringExtra("dataChannels").equals(projects.getObjectId())) {
                     long id = intent.getLongExtra("id", -1);
                     if (!intent.getStringExtra("dataOption").equals("delete")) {
                         //收到添加或更新的广播
