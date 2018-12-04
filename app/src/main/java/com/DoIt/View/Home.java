@@ -53,16 +53,6 @@ public class Home extends AppCompatActivity {
     }
 
     @Override
-    public void onStart(){
-        super.onStart();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
