@@ -1,7 +1,9 @@
 package com.DoIt.View;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.design.widget.TabLayout;
@@ -14,8 +16,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.DoIt.Bmobs;
 import com.DoIt.Daos;
 import com.DoIt.GreenDaos.Dao.Projects;
+import com.DoIt.JavaBean.AppVersion;
 import com.DoIt.R;
 import com.DoIt.View.HomePage.NearByProjectList;
 import com.DoIt.View.HomePage.SelfPage;
@@ -25,10 +29,12 @@ import com.umeng.analytics.MobclickAgent;
 
 import java.util.Objects;
 
+import cn.bmob.v3.exception.BmobException;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.DoIt.View.ChooseProject.CHOOSE_PROJECT_RESULT;
 import static com.DoIt.View.ChooseSubject.CHOOSE_SUBJECT_RESULT;
+import static com.DoIt.View.FirstPage.VERSION_I;
 
 public class Home extends AppCompatActivity {
     public static final int HOME_REQUEST = 443;
@@ -99,6 +105,7 @@ public class Home extends AppCompatActivity {
      *初始化页面
      */
     private void initView(){
+        checkAppUpdate();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.hide();
         FragmentManager fm = getSupportFragmentManager();
@@ -156,5 +163,32 @@ public class Home extends AppCompatActivity {
                 joinsMessage.setBadgeNumber(Daos.getInt(Home.this).getJoinNewItem());
             }
         };
+    }
+    /**
+     * 当检测到强制更新时弹出本窗口
+     */
+    private void initUpdateDialog() {
+        AlertDialog.Builder update = new AlertDialog.Builder(this, R.style.MyDialogTheme);
+        update.setCancelable(false);
+        update.setMessage("检测到强制更新，请前往应用市场进行更新");
+        update.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        }).show();
+    }
+    /**
+     * 检测版本更新
+     */
+    private void checkAppUpdate() {
+        Bmobs.checkAppUpdate(new Bmobs.Result<AppVersion>() {
+            @Override
+            public void onData(AppVersion appVersion, BmobException e) {
+                if (e == null)
+                    if (appVersion.isIsforce() && VERSION_I < appVersion.getVersion_i())
+                        initUpdateDialog();
+            }
+        });
     }
 }
