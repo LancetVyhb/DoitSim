@@ -38,8 +38,8 @@
 
                 <ImageView
                     android:id="@+id/invite"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/invite" />
 
@@ -89,14 +89,16 @@
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/addItem"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
                     app:backgroundTint="@color/replied"
+                    app:fabCustomSize="40dp"
+                    app:fabSize="mini"
                     app:srcCompat="@drawable/plus" />
 
             </LinearLayout>
@@ -115,7 +117,7 @@
         <ImageView
             android:id="@+id/send"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/send" />
     </LinearLayout>

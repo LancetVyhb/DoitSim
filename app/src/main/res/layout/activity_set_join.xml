@@ -29,14 +29,14 @@
                 <ImageView
                     android:id="@+id/agree"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/agree" />
 
                 <ImageView
                     android:id="@+id/reject"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/reject" />
             </LinearLayout>
@@ -57,11 +57,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="8dp"
                     android:clickable="true"
                     android:focusable="true"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
                     app:backgroundTint="@color/replied"
+                    app:fabCustomSize="40dp"
+                    app:fabSize="mini"
                     app:srcCompat="@drawable/plus" />
 
             </LinearLayout>
@@ -79,7 +81,7 @@
         <ImageView
             android:id="@+id/send"
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="25dp"
             app:srcCompat="@drawable/send" />
     </LinearLayout>
 
