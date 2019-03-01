@@ -1,4 +1,4 @@
-package com.example.thinkpad.doIt;
+package com.DoIt;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.thinkpad.doit", appContext.getPackageName());
+        assertEquals("com.DoIt", appContext.getPackageName());
     }
 }

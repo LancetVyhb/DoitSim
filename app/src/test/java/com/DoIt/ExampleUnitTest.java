@@ -1,4 +1,4 @@
-package com.example.thinkpad.doIt;
+package com.DoIt;
 
 import org.junit.Test;
 
