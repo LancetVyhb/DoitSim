@@ -15,5 +15,7 @@
     <color name="execute">#fff3ad</color>
     <color name="finish">#abffa6</color>
     <color name="warn">#ffadad</color>
-    <color name="accent_material_light">#000000</color>
+
+    <color name="navigation_background">#F0F0F0</color>
+    <color name="navigation_checked">#FF9800</color>
 </resources>

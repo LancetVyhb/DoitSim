@@ -33,7 +33,7 @@ public class SelfJoinListAdapter extends RecyclerView.Adapter{
             "警告"
     };
     private static final String[] COLORS = {
-            "#FFC3C3C3",
+            "#FFFFFFFF",
             "#FFFEF0B5",
             "#FFBEFFAD",
             "#FFFFADAD"

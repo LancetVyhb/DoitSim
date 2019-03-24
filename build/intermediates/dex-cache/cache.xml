@@ -102,6 +102,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\yh188\.gradle\caches\modules-2\files-2.1\org.jetbrains\annotations\13.0\919f0dfe192fb4e063e7dacadee7f8bb9a2672a9\annotations-13.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="28.0.3"
+        sha1="919f0dfe192fb4e063e7dacadee7f8bb9a2672a9">
+        <dex dex="C:\Users\yh188\AndroidStudioProjects\DoitSim\app\build\intermediates\transforms\dex\debug\folders\1000\10\annotations-13.0_b5b163650535bc9039564b5fe2dceff4665e5c83\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\yh188\.android\build-cache\16a168e6edd0a57c1e3c3def5fb9dfbd148592c0\output\jars\classes.jar"
         jumboMode="false"
         optimize="true"
@@ -729,15 +738,6 @@
         revision="28.0.3"
         sha1="84127ad71f76445b8215afceb38e8b05f58eafa6">
         <dex dex="C:\Users\yh188\AndroidStudioProjects\DoitSim\app\build\intermediates\transforms\dex\debug\folders\1000\10\rxandroid-1.2.0_b5d35660f52ff832356c25cb372b0a8b04311b08\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Program Files\Android\Android Studio\gradle\m2repository\org\jetbrains\annotations\13.0\annotations-13.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="28.0.3"
-        sha1="919f0dfe192fb4e063e7dacadee7f8bb9a2672a9">
-        <dex dex="C:\Users\yh188\AndroidStudioProjects\DoitSim\app\build\intermediates\transforms\dex\debug\folders\1000\10\annotations-13.0_1a1ecf57ad78f2133cd33f7be09f61b9db498cc9\classes.dex" />
     </item>
     <item
         is-multidex="false"

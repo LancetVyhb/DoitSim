@@ -6,7 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.design.widget.TabLayout;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,9 +15,11 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.DoIt.Bmobs;
+import com.DoIt.BottomNavigationViewHelper;
 import com.DoIt.Daos;
 import com.DoIt.GreenDaos.Dao.Projects;
 import com.DoIt.JavaBean.AppVersion;
@@ -44,6 +47,9 @@ public class Home extends AppCompatActivity {
     private SelfPage selfPage;
     private QBadgeView joinsMessage;
     private BroadcastReceiver receiver;
+    private ViewPager viewPager;
+    private MenuItem menuItem;
+    private BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +105,7 @@ public class Home extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.hide();
         FragmentManager fm = getSupportFragmentManager();
-        ViewPager viewPager = findViewById(R.id.viewPagers);
-        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        viewPager = findViewById(R.id.viewPagers);
         selfJoinList = new SelfJoinList();
         subjectList = new SubjectList();
         nearByProjectList = new NearByProjectList();
@@ -127,26 +132,48 @@ public class Home extends AppCompatActivity {
         };
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(4);
-        tabLayout.setupWithViewPager(viewPager);
-        TabLayout.Tab tab1, tab2, tab3, tab4;
+        navigation = findViewById(R.id.navigation);
+        BottomNavigationViewHelper.disableShiftMode(navigation);
+        navigation.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.item_project:
+                                viewPager.setCurrentItem(0);
+                                break;
+                            case R.id.item_subject:
+                                viewPager.setCurrentItem(1);
+                                break;
+                            case R.id.item_near:
+                                viewPager.setCurrentItem(2);
+                                break;
+                            case R.id.item_self:
+                                viewPager.setCurrentItem(3);
+                                break;
+                        }
+                        return false;
+                    }
+                });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+            @Override
+            public void onPageSelected(int position) {
+                if (menuItem != null) {
+                    menuItem.setChecked(false);
+                } else {
+                    navigation.getMenu().getItem(0).setChecked(false);
+                }
+                menuItem = navigation.getMenu().getItem(position);
+                menuItem.setChecked(true);
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) { }
+        });
         joinsMessage = new QBadgeView(this);
-        if ((tab1 = tabLayout.getTabAt(0)) != null){
-            tab1.setText("搞事");
-            tab1.setIcon(R.drawable.project);
-            joinsMessage.bindTarget(tab1.view);
-        }
-        if ((tab2 = tabLayout.getTabAt(1)) != null){
-            tab2.setText("通讯录");
-            tab2.setIcon(R.drawable.subjects);
-        }
-        if ((tab3 = tabLayout.getTabAt(2)) != null){
-            tab3.setText("附近");
-            tab3.setIcon(R.drawable.map);
-        }
-        if ((tab4 = tabLayout.getTabAt(3)) != null){
-            tab4.setText("我的");
-            tab4.setIcon(R.drawable.self);
-        }
+        joinsMessage.bindTarget(navigation.getChildAt(0));
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
