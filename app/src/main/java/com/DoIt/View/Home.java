@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,7 +17,9 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.DoIt.Bmobs;
@@ -172,8 +176,13 @@ public class Home extends AppCompatActivity {
             @Override
             public void onPageScrollStateChanged(int state) { }
         });
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
+        View tab = menuView.getChildAt(0);
+        BottomNavigationItemView itemView = (BottomNavigationItemView) tab;
+
         joinsMessage = new QBadgeView(this);
-        joinsMessage.bindTarget(navigation.getChildAt(0));
+        joinsMessage.setBadgeGravity(Gravity.START|Gravity.TOP)
+                .setGravityOffset(20,0,true).bindTarget(itemView);
         receiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

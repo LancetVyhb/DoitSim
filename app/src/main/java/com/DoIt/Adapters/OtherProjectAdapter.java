@@ -46,6 +46,7 @@ public class OtherProjectAdapter extends RecyclerView.Adapter{
             ""
     };
     private static final String[][] OPTION_STATE = {
+            {},
             {"已回应", "已同意", "已拒绝", "未回应",},
             {"已审核", "已通过", "已否决", "未审核",},
     };

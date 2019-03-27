@@ -608,12 +608,12 @@ public class Daos {
     public int checkJoinStatusWithTarget(ProjectItems projectItems) {
         int status = 0;//计划
         List<ProjectItems> children = projectItems.getChildren();
-        //当还有参与者未同意时，任务状态为计划
-        if (projectItems.getAgree().equals(projectItems.getTotal())) {
+        //当过半参与者同意时，任务状态为执行，否则为计划
+        if (projectItems.getAgree() > (projectItems.getReject())) {
             for (int i = 0; i < children.size(); i++) {
-                if (checkJoinStatus(children.get(i)) != 2) {
+                if (checkJoinStatus(children.get(i)) != 2 && checkJoinStatus(children.get(i)) != 0) {
                     status = 1;//执行
-                    break;//当还有参与者未完成任务时，任务状态为执行
+                    break;//当还有参与者未完成任务时，任务状态为执行(未同意者除外)
                 }//当所有参与者完成任务时，任务状态为完成
                 if (i == (children.size() - 1)) status = 2;//完成
             }
