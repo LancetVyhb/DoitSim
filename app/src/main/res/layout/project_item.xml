@@ -25,8 +25,8 @@
 
             <ImageView
                 android:id="@+id/repliedImage"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/replied"
@@ -48,8 +48,8 @@
 
             <ImageView
                 android:id="@+id/agreeImage"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/agree"
@@ -71,8 +71,8 @@
 
             <ImageView
                 android:id="@+id/rejectImage"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:layout_marginEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/reject"
@@ -125,7 +125,7 @@
         <ImageView
             android:id="@+id/open"
             android:layout_width="0dp"
-            android:layout_height="20dp"
+            android:layout_height="15dp"
             android:layout_marginStart="38dp"
             android:layout_marginEnd="38dp"
             app:layout_constraintBottom_toBottomOf="parent"
