@@ -5,7 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.DoIt.DoItApplication;
 import com.DoIt.Permissions.PermissionListener;
@@ -71,7 +71,7 @@ public class FirstPage extends AppCompatActivity {
      */
     private void start() {
         Intent intent;
-        BmobUser user = BmobUser.getCurrentUser();
+        BmobUser user = BmobUser.getCurrentUser(BmobUser.class);
         //用户未注册登录或因注销跳转而来
         if (user == null || Objects.equals(getIntent().getAction(), "ManageAccount")) {
             //跳转到登陆界面

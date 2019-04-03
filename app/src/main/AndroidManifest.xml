@@ -91,6 +91,11 @@
             </intent-filter>
         </receiver>
 
+        <provider
+            android:name="cn.bmob.v3.util.BmobContentProvider"
+            android:authorities="com.DoIt.BmobContentProvider">
+        </provider>
+
         <activity android:name=".View.Home" />
         <activity android:name=".View.SetProject" />
         <activity android:name=".View.SetItem" />

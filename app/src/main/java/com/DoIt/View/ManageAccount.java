@@ -9,8 +9,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -239,7 +239,7 @@ public class ManageAccount extends AppCompatActivity {
      * 更新用户信息
      */
     private void updateUser() {
-        user.update(BmobUser.getCurrentUser().getObjectId(), new UpdateListener() {
+        user.update(BmobUser.getCurrentUser(BmobUser.class).getObjectId(), new UpdateListener() {
             @Override
             public void done(BmobException e) {
                 if (e == null) updateSubject();
