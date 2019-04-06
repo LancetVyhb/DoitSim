@@ -37,8 +37,8 @@ public class FirstPage extends AppCompatActivity {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.RECEIVE_BOOT_COMPLETED,
     };
-    public static final Integer VERSION_I = 5;
-    public static final String CHANNEL = "baidu";
+    public static final Integer VERSION_I = 6;
+    public static final String CHANNEL = "anzhi";
     private PermissionPageUtils utils;
     private Progress progress;
 
