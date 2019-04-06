@@ -38,7 +38,7 @@ public class FirstPage extends AppCompatActivity {
             Manifest.permission.RECEIVE_BOOT_COMPLETED,
     };
     public static final Integer VERSION_I = 6;
-    public static final String CHANNEL = "anzhi";
+    public static final String CHANNEL = "huawei";
     private PermissionPageUtils utils;
     private Progress progress;
 
