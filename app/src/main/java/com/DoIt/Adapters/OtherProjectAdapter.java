@@ -46,7 +46,6 @@ public class OtherProjectAdapter extends RecyclerView.Adapter{
             ""
     };
     private static final String[][] OPTION_STATE = {
-            {},
             {"已回应", "已同意", "已拒绝", "未回应",},
             {"已审核", "已通过", "已否决", "未审核",},
     };
@@ -170,8 +169,8 @@ public class OtherProjectAdapter extends RecyclerView.Adapter{
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, date;
-        private ImageView head, option, open, hide, reply, edit;
+        private TextView name, date, open;
+        private ImageView head, option, hide, reply, edit;
         private RecyclerView recycler;
         private ContentAdapter adapter;
         private ConstraintLayout status;
@@ -248,8 +247,9 @@ public class OtherProjectAdapter extends RecyclerView.Adapter{
             recycler.setVisibility(View.VISIBLE);
             //底项没有子类，不能展开
             if (item.projectItem.getType() == 2) open.setVisibility(View.GONE);
-            if (item.isOpen) open.setImageResource(R.drawable.close);
-            else open.setImageResource(R.drawable.open);
+            //设置open的说明
+            if (!item.isOpen) open.setText("查看回应");
+            else open.setText("收起回应");
             if (item.isHide) {
                 hide.setImageResource(R.drawable.hide);
                 recycler.setVisibility(View.GONE);
@@ -271,8 +271,8 @@ public class OtherProjectAdapter extends RecyclerView.Adapter{
             if (item.projectItem.getType() != 0) {
                 itemView.setBackgroundColor(resources.getColor(COLOR[item.projectItem.getOption()]));
                 option.setImageResource(OPTION[item.projectItem.getOption()]);
-                name.setText(name.getText().toString()
-                        + " " + OPTION_STATE[item.projectItem.getType()][item.projectItem.getOption()]);
+                name.setText(name.getText().toString() + " " +
+                        OPTION_STATE[item.projectItem.getType() - 1][item.projectItem.getOption()]);
             } else {
                 itemView.setBackgroundColor(resources.getColor(R.color.target));
                 option.setImageResource(R.color.target);

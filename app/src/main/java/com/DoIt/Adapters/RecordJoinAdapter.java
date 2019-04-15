@@ -188,8 +188,8 @@ public class RecordJoinAdapter extends RecyclerView.Adapter{
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, date, replied, agree, reject;
-        private ImageView head, option, open, hide, reply, edit;
+        private TextView name, date, replied, agree, reject, open;
+        private ImageView head, option, hide, reply, edit;
         private RecyclerView recycler;
         private ContentAdapter adapter;
         private ConstraintLayout status;
@@ -262,9 +262,13 @@ public class RecordJoinAdapter extends RecyclerView.Adapter{
                 agree.setText(Integer.toString(item.projectItems.getAgree()));
                 reject.setText(Integer.toString(item.projectItems.getReject()));
             }
-            //设置open的图像
-            if (item.isOpen) open.setImageResource(R.drawable.close);
-            else open.setImageResource(R.drawable.open);
+            //设置open的说明
+            if (item.projectItems.getTotal() == 0) open.setVisibility(View.GONE);
+            else {
+                open.setVisibility(View.VISIBLE);
+                if (!item.isOpen) open.setText("查看" + item.projectItems.getTotal() + "条回应");
+                else open.setText("收起回应");
+            }
             if (item.isHide) {
                 hide.setImageResource(R.drawable.hide);
                 recycler.setVisibility(View.GONE);

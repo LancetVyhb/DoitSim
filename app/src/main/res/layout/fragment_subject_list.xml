@@ -53,8 +53,6 @@
             android:scaleType="center"
             android:src="@drawable/plus"
             app:backgroundTint="@color/replied"
-            app:fabCustomSize="40dp"
-            app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

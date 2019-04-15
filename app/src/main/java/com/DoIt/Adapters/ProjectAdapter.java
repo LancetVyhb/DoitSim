@@ -249,8 +249,8 @@ public class ProjectAdapter extends RecyclerView.Adapter{
     }
 
     private class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView name, date, replied, agree, reject;
-        private ImageView head, option, open, reply, edit, hide;
+        private TextView name, date, replied, agree, reject, open;
+        private ImageView head, option, reply, edit, hide;
         private ConstraintLayout status;
         private RecyclerView recycler;
         private ContentAdapter adapter;
@@ -346,9 +346,13 @@ public class ProjectAdapter extends RecyclerView.Adapter{
                 if (!power.optBoolean("isFreeJudge")) reply.setVisibility(View.GONE);
                 else if (item.projectItems.getType() != 0) reply.setVisibility(View.VISIBLE);
             }
-            //设置open的图像
-            if (item.isOpen) open.setImageResource(R.drawable.close);
-            else open.setImageResource(R.drawable.open);
+            //设置open的说明
+            if (item.projectItems.getTotal() == 0) open.setVisibility(View.GONE);
+            else {
+                open.setVisibility(View.VISIBLE);
+                if (!item.isOpen) open.setText("查看" + item.projectItems.getTotal() + "条回应");
+                else open.setText("收起回应");
+            }
             if (item.isHide) {
                 hide.setImageResource(R.drawable.hide);
                 recycler.setVisibility(View.GONE);

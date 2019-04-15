@@ -62,8 +62,6 @@
                     android:clickable="true"
                     android:focusable="true"
                     app:backgroundTint="@color/replied"
-                    app:fabCustomSize="40dp"
-                    app:fabSize="mini"
                     app:srcCompat="@drawable/plus" />
 
             </LinearLayout>
