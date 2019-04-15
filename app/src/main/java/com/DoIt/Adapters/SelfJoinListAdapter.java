@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -96,10 +95,8 @@ public class SelfJoinListAdapter extends RecyclerView.Adapter{
 
     private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name, date, title, status, number;
-        private ImageView head;
-        private ImageButton deal;
+        private ImageView head, deal;
         private QBadgeView badgeView;
-
         private ViewHolder(View itemView) {
             super(itemView);
             deal = itemView.findViewById(R.id.deal);
@@ -114,7 +111,6 @@ public class SelfJoinListAdapter extends RecyclerView.Adapter{
                     .setBadgeGravity(Gravity.TOP | Gravity.END)
                     .setGravityOffset(0, 0, true);
             head.setImageResource(R.drawable.head);
-            deal.setImageResource(R.drawable.ic_sync_black_24dp);
             deal.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
