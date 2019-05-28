@@ -42,13 +42,13 @@
             android:value="588210fbd30c8268c5d46e339a3d60c3" />
         <meta-data
             android:name="BMOB_CHANNEL"
-            android:value="huawei" />
+            android:value="baidu" />
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="5b8f9eeff43e482cb40001cd" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="huawei" />
+            android:value="baidu" />
 
         <service
             android:name="cn.bmob.push.lib.service.PushService"

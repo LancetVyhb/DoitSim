@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: cn.bmob.android:bmob-push:1.0.3@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/bmob-push-1.0.3.aar/e8cdca9bfeeb246ae461a36ed91d10db/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/bmob-push-1.0.3.aar/e8cdca9bfeeb246ae461a36ed91d10db/jars/libs/Bmob_Push_1.0.3_20190304.jar!/" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/bmob-push-1.0.3.aar/e8cdca9bfeeb246ae461a36ed91d10db/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4f20120beca451b6c897ffbddccffcfb/jars/libs/Bmob_Push_1.0.3_20190304.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4f20120beca451b6c897ffbddccffcfb/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/4f20120beca451b6c897ffbddccffcfb/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
