@@ -97,7 +97,7 @@ public class OtherJoinListAdapter extends RecyclerView.Adapter{
             date.setText(formatter.format(createdAt));
             name.setText(join.getProject().getSender().getUserName());
             title.setText(join.getProject().getTitle());
-            number.setText(Integer.toString(join.getProject().getNumber()) + "人参与");
+            number.setText(join.getProject().getNumber() + "人参与");
             String headImage = join.getProject().getSender().getHeadImage();
             if (headImage != null) Glide.with(itemView).load(headImage).into(head);
         }
