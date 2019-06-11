@@ -140,6 +140,7 @@ public class Record extends AppCompatActivity {
      */
     private void addToJoinList() {
         Daos.getInt(this).updateJoinsImportance(joins.getId(),0);
+        adapter.removeItem(joins);
         Toast.makeText(Record.this, "已将该任务提上日程表", Toast.LENGTH_SHORT).show();
     }
     /**
