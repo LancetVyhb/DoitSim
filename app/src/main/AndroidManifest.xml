@@ -28,6 +28,7 @@
         android:roundIcon="@mipmap/app_big_icon"
         android:supportsRtl="true"
         android:theme="@style/Material"
+        android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".View.FirstPage">
             <intent-filter>
@@ -112,6 +113,8 @@
         <activity android:name=".View.ChooseSubject" />
         <activity android:name=".View.OtherSubject" />
         <activity android:name=".View.SearchSubject" />
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
     </application>
 
 </manifest>
