@@ -2,9 +2,9 @@ package com.DoIt.View.HomePage;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AlertDialog;
@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.DoIt.Adapters.NearProjectListAdapter;
 import com.DoIt.Bmobs;
-import com.DoIt.GetLocations;
 import com.DoIt.GreenDaos.Dao.Projects;
 import com.DoIt.JavaBean.Project;
 import com.DoIt.JumpToProjectPage;
@@ -29,6 +28,8 @@ import com.DoIt.View.SetProject;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationManager;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -48,9 +49,10 @@ public class NearByProjectList extends Fragment {
     };
     private static final int NEAR_PROJECT_LIST_REQUEST = 999;
     private RefreshLayout refreshLayout;
+    private FloatingActionButton add;
     private NearProjectListAdapter adapter;
     private Progress upload;
-    private Location location;
+    private TencentLocation location;
     private int skip;
     private boolean isRefresh;
 
@@ -67,8 +69,6 @@ public class NearByProjectList extends Fragment {
     public void onResume() {
         super.onResume();
         MobclickAgent.onPageStart("NearByProjectList");
-        isRefresh = false;
-        getLocation();
     }
 
     @Override
@@ -77,7 +77,7 @@ public class NearByProjectList extends Fragment {
         MobclickAgent.onPageEnd("NearByProjectList");
     }
 
-    private void initView(View view){
+    private void initView(View view) {
         RecyclerView recycler = view.findViewById(R.id.recycler);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         recycler.addItemDecoration(new DividerItemDecoration
@@ -111,15 +111,15 @@ public class NearByProjectList extends Fragment {
         });
         recycler.setAdapter(adapter);
 
-        FloatingActionButton add = view.findViewById(R.id.add);
+        add = view.findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 initDialog();
             }
         });
-        getLocation();
     }
+
     /**
      * 初始化发送任务弹窗
      */
@@ -146,16 +146,28 @@ public class NearByProjectList extends Fragment {
             }
         }).show();
     }
+
+    /**
+     * 设置当前用户所在地点，由HOME页面调用
+     */
+    public void setLocation(TencentLocation location) {
+        this.location = location;
+        refreshLayout.autoRefresh();
+    }
+
     /**
      * 获取当前用户所在地点
      */
-    private void getLocation(){
-        location = GetLocations.getLocation(Objects.requireNonNull(getActivity()));
+    private void getLocation() {
+        if (location == null)
+            location = TencentLocationManager.getInstance(getContext()).getLastKnownLocation();
         if (location != null) {
-            adapter.setWhere(location, getContext());
+            add.setVisibility(View.VISIBLE);
+            adapter.setWhere(location);
             setAdapter();
-        }
+        } else add.setVisibility(View.INVISIBLE);
     }
+
     /**
      * 初次获取附近的任务列表
      */
@@ -176,6 +188,7 @@ public class NearByProjectList extends Fragment {
             }
         });
     }
+
     /**
      * 下拉加载获取附近更多的任务列表
      */
@@ -195,6 +208,7 @@ public class NearByProjectList extends Fragment {
             }
         });
     }
+
     /**
      * 设置任务地点
      */
@@ -207,6 +221,7 @@ public class NearByProjectList extends Fragment {
                 Project project = new Project();
                 project.setObjectId(choseProjects.getObjectId());
                 project.setPlace(new BmobGeoPoint(location.getLongitude(), location.getLatitude()));
+                project.setAddress(location.getAddress());
                 JSONObject power;
                 try {
                     power = new JSONObject(choseProjects.getStruct());

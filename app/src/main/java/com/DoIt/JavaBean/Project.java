@@ -2,7 +2,6 @@ package com.DoIt.JavaBean;
 
 import cn.bmob.v3.BmobObject;
 import cn.bmob.v3.datatype.BmobGeoPoint;
-import cn.bmob.v3.datatype.BmobRelation;
 
 public class Project extends BmobObject{
     private Subject sender;
@@ -10,8 +9,8 @@ public class Project extends BmobObject{
     private Integer number;
     private Integer type;
     private String struct;
+    private String address;
     private BmobGeoPoint place;
-    private BmobRelation theme;
     public Subject getSender() {
         return sender;
     }
@@ -48,10 +47,10 @@ public class Project extends BmobObject{
     public void setStruct(String struct) {
         this.struct = struct;
     }
-    public BmobRelation getTheme() {
-        return theme;
+    public String getAddress() {
+        return address;
     }
-    public void setTheme(BmobRelation theme) {
-        this.theme = theme;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

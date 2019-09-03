@@ -1,5 +1,6 @@
 package com.DoIt.View;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +35,10 @@ import com.DoIt.View.HomePage.NearByProjectList;
 import com.DoIt.View.HomePage.SelfPage;
 import com.DoIt.View.HomePage.SelfJoinList;
 import com.DoIt.View.HomePage.SubjectList;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationListener;
+import com.tencent.map.geolocation.TencentLocationManager;
+import com.tencent.map.geolocation.TencentLocationRequest;
 import com.umeng.analytics.MobclickAgent;
 
 import java.util.Objects;
@@ -43,7 +50,7 @@ import static com.DoIt.View.ChooseProject.CHOOSE_PROJECT_RESULT;
 import static com.DoIt.View.ChooseSubject.CHOOSE_SUBJECT_RESULT;
 import static com.DoIt.View.FirstPage.VERSION_I;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements TencentLocationListener{
     public static final int HOME_REQUEST = 443;
     private SelfJoinList selfJoinList;
     private SubjectList subjectList;
@@ -106,6 +113,7 @@ public class Home extends AppCompatActivity {
      */
     private void initView(){
         checkAppUpdate();
+        initLocationService();
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.hide();
         FragmentManager fm = getSupportFragmentManager();
@@ -190,6 +198,23 @@ public class Home extends AppCompatActivity {
             }
         };
     }
+
+    /**
+     * 获取用户当前位置
+     */
+    private void initLocationService() {
+        if (checkCallingOrSelfPermission   //权限检查
+                (Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            TencentLocationManager locationManager = TencentLocationManager.getInstance(this);
+            locationManager.requestLocationUpdates(
+                    TencentLocationRequest.create()
+                            .setInterval(600000)  //更新周期（单位为毫秒）
+                            .setRequestLevel(TencentLocationRequest.REQUEST_LEVEL_ADMIN_AREA)//地理信息层次（经纬度，地址）
+                            .setAllowCache(true)  //允许缓存
+                    , this);
+        }
+    }
+
     /**
      * 当检测到强制更新时弹出本窗口
      */
@@ -216,5 +241,17 @@ public class Home extends AppCompatActivity {
                         initUpdateDialog();
             }
         });
+    }
+
+    @Override
+    public void onLocationChanged(TencentLocation tencentLocation, int error, String reason) {
+        if (0 != error) Toast.makeText(this, reason, Toast.LENGTH_SHORT).show();
+        if (tencentLocation != null && nearByProjectList != null)
+            nearByProjectList.setLocation(tencentLocation);
+    }
+
+    @Override
+    public void onStatusUpdate(String name, int status, String desc) {
+
     }
 }

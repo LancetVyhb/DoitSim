@@ -50,6 +50,9 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="baidu" />
+        <meta-data
+            android:name="TencentMapSDK"
+            android:value="PPLBZ-67IWW-4GURL-OFXM2-VP7FV-F2FJE" />
 
         <service
             android:name="cn.bmob.push.lib.service.PushService"

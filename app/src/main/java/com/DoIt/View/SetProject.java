@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.net.Uri;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
@@ -27,7 +26,6 @@ import android.widget.Toast;
 import com.DoIt.Adapters.JoinerListAdapter;
 import com.DoIt.DaoToJson;
 import com.DoIt.Daos;
-import com.DoIt.GetLocations;
 import com.DoIt.Progress;
 import com.DoIt.Adapters.ContentAdapter;
 import com.DoIt.CloudAsyncs.CloudAsyncsListener;
@@ -37,6 +35,8 @@ import com.DoIt.GreenDaos.Dao.Subjects;
 import com.DoIt.JavaBean.Project;
 import com.DoIt.Medias.PictureUtil;
 import com.DoIt.R;
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationManager;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -76,8 +76,8 @@ public class SetProject extends AppCompatActivity {
             "图片",
             "子任务"
     };
-    private boolean SET_POWER[] = {false, false, true};
-    private Location location;
+    private boolean[] SET_POWER = {false, false, true};
+    private TencentLocation location;
     private EditText title;
     private TextView joinerListState;
     private List<Subjects> joinerList;
@@ -130,9 +130,6 @@ public class SetProject extends AppCompatActivity {
             case R.id.setPlace://位置设置
                 setLocation();
                 break;
-        //    case R.id.setTheme://主题设置
-         //       setTheme();
-         //       break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -252,7 +249,7 @@ public class SetProject extends AppCompatActivity {
         if (Objects.equals(getIntent().getAction(), "setPlace"))
             setLocation();
 
-        joinerListState.setText("已有" + Integer.toString(joinerList.size()) + "人参加");
+        joinerListState.setText("已有" + joinerList.size() + "人参加");
         try {
             power.put("isFreeJoin", SET_POWER[0]);
             power.put("isFreeJudge", SET_POWER[1]);
@@ -285,7 +282,7 @@ public class SetProject extends AppCompatActivity {
             public void onItemClick(View v, Subjects subjects) {
                 if (subjects != Daos.getInt(SetProject.this).getSelf()) {
                     joinerList.remove(subjects);
-                    joinerListState.setText("已有" + Integer.toString(joinerList.size()) + "人参加");
+                    joinerListState.setText("已有" + joinerList.size() + "人参加");
                     joinerListAdapter.removeItem(subjects);
                     Toast.makeText(SetProject.this, "已移除"
                             + subjects.getUserName(), Toast.LENGTH_SHORT).show();
@@ -370,8 +367,10 @@ public class SetProject extends AppCompatActivity {
     private void setLocation() {
         SET_POWER[0] = true;
         SET_POWER[2] = true;
-        location = GetLocations.getLocation(this);
-        Toast.makeText(SetProject.this, "已设置地点", Toast.LENGTH_SHORT).show();
+        location = TencentLocationManager.getInstance(this).getLastKnownLocation();
+        if (location != null)
+            Toast.makeText(SetProject.this, "已设置地点", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(SetProject.this, "无法获取当前地点", Toast.LENGTH_SHORT).show();
     }
     /**
      * 打开系统相册
@@ -433,7 +432,7 @@ public class SetProject extends AppCompatActivity {
         );
         cloud.setListener(new CloudAsyncsListener() {
             @Override
-            public void onSuccess(long id[]) {
+            public void onSuccess(long[] id) {
                 //任务创建成功后跳转至任务页面
                 if (location != null) updateProjectPlace(id[0]);
                 else jumpToJoinedProject(id[0]);
@@ -455,6 +454,7 @@ public class SetProject extends AppCompatActivity {
                 Project project = new Project();
                 project.setObjectId(Daos.getInt(SetProject.this).getJoins(id).getProjects().getObjectId());
                 project.setPlace(new BmobGeoPoint(location.getLongitude(),location.getLatitude()));
+                project.setAddress(location.getAddress());
                 project.update(new UpdateListener() {
                     @Override
                     public void done(BmobException e) {

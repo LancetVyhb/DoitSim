@@ -1,9 +1,6 @@
 package com.DoIt.Adapters;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.location.Address;
-import android.location.Location;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.DoIt.GetLocations;
 import com.DoIt.JavaBean.Project;
 import com.DoIt.R;
+import com.tencent.map.geolocation.TencentLocation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,16 +24,15 @@ import java.util.List;
 
 public class NearProjectListAdapter extends RecyclerView.Adapter {
     private List<Project> list;
-    private Location where;
-    private Address self;
-    private SimpleDateFormat formatter,paser;
+    private TencentLocation where;
+    private SimpleDateFormat formatter,parser;
     private OnItemClickListener onItemClickListener;
 
     @SuppressLint("SimpleDateFormat")
     public NearProjectListAdapter(){
         list = new ArrayList<>();
         formatter = new SimpleDateFormat("yyyy-MM-dd");
-        paser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        parser = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     }
 
     @NonNull
@@ -67,9 +64,8 @@ public class NearProjectListAdapter extends RecyclerView.Adapter {
         notifyDataSetChanged();
     }
 
-    public void setWhere(Location where, Context context){
+    public void setWhere(TencentLocation where){
         this.where = where;
-        this.self = GetLocations.getAddress(context, where.getLatitude(),where.getLongitude());
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
@@ -106,29 +102,24 @@ public class NearProjectListAdapter extends RecyclerView.Adapter {
         public void setView(Project project) {
             Date createdAt = null;
             try {
-                createdAt = paser.parse(project.getCreatedAt());
+                createdAt = parser.parse(project.getCreatedAt());
             } catch (ParseException e) {
                 e.printStackTrace();
             }
             date.setText(formatter.format(createdAt));
             name.setText(project.getSender().getUserName());
             title.setText(project.getTitle());
-            number.setText(Integer.toString(project.getNumber()) + "人参与");
+            number.setText(project.getNumber() + "人参与");
             String headImage = project.getSender().getHeadImage();
             if (headImage != null) Glide.with(itemView).load(headImage).into(head);
             //获取地理信息
             GetLocations.Distance distance = GetLocations.getDistance(project.getPlace(), where);
-            Address address = GetLocations.getAddress(itemView.getContext(),
-                    project.getPlace().getLatitude(), project.getPlace().getLongitude());
-            distances.setText(Double.toString(distance.distance) + distance.unit);
-            if (!(address != null && self != null)) {
-                places.setVisibility(View.GONE);
-            } else {
+            distances.setText(distance.distance + distance.unit);
+            if (project.getAddress() == null) places.setVisibility(View.GONE);
+            else {
                 places.setVisibility(View.VISIBLE);
-                //屏蔽掉省市信息
-                String place = address.getAddressLine(0)
-                        .replace(self.getAdminArea() + self.getLocality(), "");
-                places.setText(place);
+                String address = project.getAddress().replace(where.getProvince() + where.getCity(), "");
+                places.setText(address);
             }
         }
     }

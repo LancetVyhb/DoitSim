@@ -1,6 +1,5 @@
 package com.DoIt.View;
 
-import android.location.Location;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -21,7 +20,6 @@ import android.widget.Toast;
 
 import com.DoIt.CloudAsyncs.SetJoinListByCloud;
 import com.DoIt.Daos;
-import com.DoIt.GetLocations;
 import com.DoIt.GreenDaos.Dao.Subjects;
 import com.DoIt.Progress;
 import com.DoIt.Adapters.ProjectAdapter;
@@ -38,6 +36,8 @@ import com.DoIt.Items.ProjectAdapterItem;
 import com.DoIt.JavaBean.Project;
 import com.DoIt.R;
 
+import com.tencent.map.geolocation.TencentLocation;
+import com.tencent.map.geolocation.TencentLocationManager;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
@@ -81,7 +81,7 @@ public class JoinedProject extends AppCompatActivity {
             "设置新位置",
             "清空位置",
     };
-    private boolean SET_POWER[] ;
+    private boolean[] SET_POWER;
     private final int JOINED_PROJECT_REQUEST = 563;
     private int joinOptions,status;
     private ActionBar actionBar;
@@ -505,11 +505,13 @@ public class JoinedProject extends AppCompatActivity {
         progress.setThread(new Runnable() {
             @Override
             public void run() {
-                Location location = GetLocations.getLocation(JoinedProject.this);
+                TencentLocation location =
+                        TencentLocationManager.getInstance(JoinedProject.this).getLastKnownLocation();
                 if (location != null) {
                     Project project = new Project();
                     project.setObjectId(projects.getObjectId());
                     project.setPlace(new BmobGeoPoint(location.getLongitude(), location.getLatitude()));
+                    project.setAddress(location.getAddress());
                     try {
                         power.put("isFreeJoin", true);
                         power.put("isFreeOpen", true);
@@ -529,7 +531,10 @@ public class JoinedProject extends AppCompatActivity {
                                     "地点设置失败" + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
-                } else progress.finishProgress();
+                } else {
+                    progress.finishProgress();
+                    Toast.makeText(JoinedProject.this, "无法获取当前地点", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         progress.startProgress("正在上传数据，请稍等");
@@ -546,6 +551,7 @@ public class JoinedProject extends AppCompatActivity {
                 Project project = new Project();
                 project.setObjectId(projects.getObjectId());
                 project.setPlace(new BmobGeoPoint());
+                project.setAddress("");
                 project.update(new UpdateListener() {
                     @Override
                     public void done(BmobException e) {
