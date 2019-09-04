@@ -151,9 +151,11 @@ public class JoinedProject extends AppCompatActivity {
         if (requestCode == JOINED_PROJECT_REQUEST && data != null) {
             if (resultCode == CHOOSE_SUBJECT_RESULT) {
                 long[] id = data.getLongArrayExtra("results");
-                List<Subjects> list = new ArrayList<>();
-                for (long anId : id) list.add(Daos.getInt(this).getSubjects(anId));
-                initSetJoinList(list);
+                if (id.length != 0) {
+                    List<Subjects> list = new ArrayList<>();
+                    for (long anId : id) list.add(Daos.getInt(this).getSubjects(anId));
+                    initSetJoinList(list);
+                }
             }
         }
     }

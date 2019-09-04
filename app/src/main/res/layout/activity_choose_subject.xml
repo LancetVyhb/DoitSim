@@ -17,11 +17,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <GridView
                 android:id="@+id/resultList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
+                android:verticalSpacing="10dp"
+                android:numColumns="7"
                 android:layout_weight="0" />
 
             <SearchView
@@ -42,6 +44,7 @@
             </ExpandableListView>
 
         </LinearLayout>
+
     </ScrollView>
 
     <Button

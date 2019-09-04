@@ -173,11 +173,8 @@ public class Home extends AppCompatActivity implements TencentLocationListener{
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
             @Override
             public void onPageSelected(int position) {
-                if (menuItem != null) {
-                    menuItem.setChecked(false);
-                } else {
-                    navigation.getMenu().getItem(0).setChecked(false);
-                }
+                if (menuItem != null) menuItem.setChecked(false);
+                else navigation.getMenu().getItem(0).setChecked(false);
                 menuItem = navigation.getMenu().getItem(position);
                 menuItem.setChecked(true);
             }

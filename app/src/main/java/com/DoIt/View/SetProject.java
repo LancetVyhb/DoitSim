@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+
+import com.DoIt.Adapters.ResultListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import androidx.appcompat.app.AlertDialog;
 import android.os.Bundle;
@@ -19,11 +21,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.DoIt.Adapters.JoinerListAdapter;
 import com.DoIt.DaoToJson;
 import com.DoIt.Daos;
 import com.DoIt.Progress;
@@ -86,7 +88,7 @@ public class SetProject extends AppCompatActivity {
     private File file;
     private BmobFile bmobFile;
     private Progress progress;
-    private JoinerListAdapter joinerListAdapter;
+    private ResultListAdapter joinerListAdapter;
     private ContentAdapter contentAdapter;
     private int selectedPosition;
     private boolean isAdd;
@@ -146,7 +148,7 @@ public class SetProject extends AppCompatActivity {
                 joinerList.add(Daos.getInt(this).getSelf());
                 for (long anId : id) joinerList.add(Daos.getInt(this).getSubjects(anId));
                 joinerListState.setText("已有" + (joinerList.size()) + "人参与");
-                joinerListAdapter.setJoinerList(joinerList);
+                joinerListAdapter.setResultList(joinerList);
             }
             //选取图片返回结果
             if (resultCode == Activity.RESULT_OK) {
@@ -175,7 +177,7 @@ public class SetProject extends AppCompatActivity {
         joinerList = new ArrayList<>();
         title = findViewById(R.id.message);
         joinerListState = findViewById(R.id.joinerListState);
-        joinerListAdapter = new JoinerListAdapter();
+        joinerListAdapter = new ResultListAdapter();
         contentAdapter = new ContentAdapter(true, this);
         //议程
         RecyclerView recycler = findViewById(R.id.recycler);
@@ -185,10 +187,7 @@ public class SetProject extends AppCompatActivity {
         recycler.setFocusable(false);
         recycler.setAdapter(contentAdapter);
         //被邀请人
-        RecyclerView joiners = findViewById(R.id.joinerList);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        joiners.setLayoutManager(manager);
+        GridView joiners = findViewById(R.id.joinerList);
         joiners.setFocusable(false);
         joiners.setAdapter(joinerListAdapter);
 
@@ -277,7 +276,7 @@ public class SetProject extends AppCompatActivity {
                 getProject();
             }
         });
-        joinerListAdapter.setListener(new JoinerListAdapter.OnItemClickListener() {
+        joinerListAdapter.setListener(new ResultListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, Subjects subjects) {
                 if (subjects != Daos.getInt(SetProject.this).getSelf()) {
@@ -289,7 +288,7 @@ public class SetProject extends AppCompatActivity {
                 }
             }
         });
-        joinerListAdapter.setJoinerList(joinerList);
+        joinerListAdapter.setResultList(joinerList);
         contentAdapter.setList("", this);
     }
     /**

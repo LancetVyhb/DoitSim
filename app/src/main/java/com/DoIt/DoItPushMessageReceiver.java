@@ -116,13 +116,12 @@ public class DoItPushMessageReceiver extends BroadcastReceiver {
                     switch (dataOption) {
                         case "set":
                             JSONArray dataArray = newData.optJSONArray("data");
-                            long idList[] = Daos.getInt(context).setOrUpdateProjectItemListToDao(dataArray);
+                            long[] idList = Daos.getInt(context).setOrUpdateProjectItemListToDao(dataArray);
                             send.putExtra("idList", idList);
                             JSONObject item = dataArray.optJSONObject(0);
                             if (item.optInt("type") == 1
                                     && item.optJSONObject("sender").optInt("role") != 0)
-                                builder.setContentTitle("有" +
-                                        Integer.toString(idList.length) + "人加入了任务：");
+                                builder.setContentTitle("有" + idList.length + "人加入了任务：");
                             else {
                                 ProjectItems items = Daos.getInt(context).getProjectItems(idList[0]);
                                 String userName = items.getSender().getJoiner().getUserName();

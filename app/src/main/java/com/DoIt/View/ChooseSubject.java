@@ -4,15 +4,14 @@ import android.content.Intent;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.DoIt.Adapters.JoinerListAdapter;
+import com.DoIt.Adapters.ResultListAdapter;
 import com.DoIt.Daos;
 import com.DoIt.Adapters.ChooseSubjectAdapter;
 import com.DoIt.GreenDaos.Dao.Subjects;
@@ -28,7 +27,7 @@ public class ChooseSubject extends AppCompatActivity {
     public static final int CHOOSE_SUBJECT_RESULT = 505;
     private ExpandableListView expandableListView;
     private ChooseSubjectAdapter showAdapter, searchAdapter;//一个展示用，一个搜索用
-    private JoinerListAdapter joinerListAdapter;
+    private ResultListAdapter resultListAdapter;
     private List<Subjects> resultList, joinerList;//结果集合和排除集合
     private boolean isSearch;
 
@@ -57,7 +56,7 @@ public class ChooseSubject extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) actionBar.hide();
 
-        joinerListAdapter = new JoinerListAdapter();
+        resultListAdapter = new ResultListAdapter();
         showAdapter = new ChooseSubjectAdapter(false);
         searchAdapter = new ChooseSubjectAdapter(false);
         expandableListView = findViewById(R.id.expandListView);
@@ -66,19 +65,16 @@ public class ChooseSubject extends AppCompatActivity {
             @Override
             public void onResultChange(List<Subjects> resultList) {
                 ChooseSubject.this.resultList = resultList;
-                joinerListAdapter.setJoinerList(resultList);
+                resultListAdapter.setResultList(resultList);
             }
         };
         showAdapter.setListener(listener);
         searchAdapter.setListener(listener);
 
-        RecyclerView joiners = findViewById(R.id.resultList);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        joiners.setLayoutManager(manager);
+        GridView joiners = findViewById(R.id.resultList);
         joiners.setFocusable(false);
-        joiners.setAdapter(joinerListAdapter);
-        joinerListAdapter.setListener(new JoinerListAdapter.OnItemClickListener() {
+        joiners.setAdapter(resultListAdapter);
+        resultListAdapter.setListener(new ResultListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, Subjects subjects) {
                 resultList.remove(subjects);
@@ -148,7 +144,7 @@ public class ChooseSubject extends AppCompatActivity {
             for (long anId : id) resultList.add(Daos.getInt(this).getSubjects(anId));
         showAdapter.setResultList(resultList);
         searchAdapter.setResultList(resultList);
-        joinerListAdapter.setJoinerList(resultList);
+        resultListAdapter.setResultList(resultList);
     }
     /**
      * 获取排除集合

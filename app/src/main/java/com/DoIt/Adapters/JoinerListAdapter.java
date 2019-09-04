@@ -37,32 +37,33 @@ public class JoinerListAdapter extends RecyclerView.Adapter {
         return joinerList.size();
     }
 
-    public void setJoinerList(List<Subjects> joinerList){
+    public void setJoinerList(List<Subjects> joinerList) {
         this.joinerList = joinerList;
         notifyDataSetChanged();
     }
 
-    public void removeItem(Subjects subjects){
+    public void removeItem(Subjects subjects) {
         Iterator<Subjects> iterator = joinerList.iterator();
-        while (iterator.hasNext()){
+        while (iterator.hasNext()) {
             Subjects subjects1 = iterator.next();
             if (subjects1 == subjects) iterator.remove();
         }
         notifyDataSetChanged();
     }
 
-    public void setListener(OnItemClickListener listener){
+    public void setListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(View v, Subjects subjects);
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder{
+    private class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private ImageView head;
-        public ViewHolder(@NonNull View itemView) {
+
+        ViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.name);
             head = itemView.findViewById(R.id.head);
@@ -73,7 +74,8 @@ public class JoinerListAdapter extends RecyclerView.Adapter {
                 }
             });
         }
-        private void setView(Subjects subjects){
+
+        private void setView(Subjects subjects) {
             name.setText(subjects.getUserName());
             if (subjects.getHeadImage() == null) head.setImageResource(R.drawable.head);
             else Glide.with(itemView).load(subjects.getHeadImage()).into(head);
