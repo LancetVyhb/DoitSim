@@ -23,6 +23,7 @@ import cn.bmob.v3.BmobUser;
 public class FirstPage extends AppCompatActivity {
     public static final String[] PERMISSIONS = {
             Manifest.permission.INTERNET,
+            Manifest.permission.FOREGROUND_SERVICE,
             Manifest.permission.ACCESS_NETWORK_STATE,
             Manifest.permission.CHANGE_NETWORK_STATE,
             Manifest.permission.ACCESS_WIFI_STATE,
