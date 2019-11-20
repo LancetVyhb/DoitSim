@@ -169,11 +169,11 @@ public class ContentAdapter extends RecyclerView.Adapter{
     }
 
     private class ContentViewHolder extends RecyclerView.ViewHolder {
-        private TextView time, add, delete;
+        private TextView time;
         private ContentViewHolder(View itemView) {
             super(itemView);
-            delete = itemView.findViewById(R.id.delete);
-            add = itemView.findViewById(R.id.add);
+            TextView delete = itemView.findViewById(R.id.delete);
+            TextView add = itemView.findViewById(R.id.add);
             time = itemView.findViewById(R.id.time);
             delete.setVisibility(View.VISIBLE);
             add.setVisibility(View.VISIBLE);
